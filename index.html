@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandboxes Regulatórios Municipais · Brasil</title>
+<style>
+/* ─────────────────────────────────────────
+   TOKENS — direto do DESIGN.md
+───────────────────────────────────────── */
+:root {
+  /* colors */
+  --primary:            #0066cc;
+  --primary-focus:      #0071e3;
+  --primary-on-dark:    #2997ff;
+  --ink:                #1d1d1f;
+  --body:               #1d1d1f;
+  --body-on-dark:       #ffffff;
+  --body-muted:         #cccccc;
+  --ink-muted-80:       #333333;
+  --ink-muted-48:       #7a7a7a;
+  --divider-soft:       #f0f0f0;
+  --hairline:           #e0e0e0;
+  --canvas:             #ffffff;
+  --canvas-parchment:   #f5f5f7;
+  --surface-pearl:      #fafafc;
+  --surface-tile-1:     #272729;
+  --surface-tile-2:     #2a2a2c;
+  --surface-tile-3:     #252527;
+  --surface-black:      #000000;
+  --surface-chip:       #d2d2d7;
+  --on-primary:         #ffffff;
+  --on-dark:            #ffffff;
+
+  /* rounded */
+  --r-none: 0px;
+  --r-xs:   5px;
+  --r-sm:   8px;
+  --r-md:   11px;
+  --r-lg:   18px;
+  --r-pill: 9999px;
+
+  /* spacing */
+  --sp-xxs:     4px;
+  --sp-xs:      8px;
+  --sp-sm:      12px;
+  --sp-md:      17px;
+  --sp-lg:      24px;
+  --sp-xl:      32px;
+  --sp-xxl:     48px;
+  --sp-section: 80px;
+
+  /* typography — font families */
+  --fd: "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --ft: "SF Pro Text",    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  color: var(--ink);
+  background: var(--canvas-parchment);
+}
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY — token-faithful
+───────────────────────────────────────── */
+
+/* hero-display: 56/600/1.07/−0.28px — SF Pro Display */
+.ty-hero {
+  font-family: var(--fd);
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.28px;
+}
+
+/* display-lg: 40/600/1.1/0 — SF Pro Display */
+.ty-dlg {
+  font-family: var(--fd);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+/* display-md: 34/600/1.47/−0.374px — SF Pro Text */
+.ty-dmd {
+  font-family: var(--ft);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+}
+
+/* lead: 28/400/1.14/0.196px — SF Pro Display */
+.ty-lead {
+  font-family: var(--fd);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: 0.196px;
+}
+
+/* lead-airy: 24/300/1.5/0 — SF Pro Text */
+.ty-airy {
+  font-family: var(--ft);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+/* tagline: 21/600/1.19/0.231px — SF Pro Display */
+.ty-tag {
+  font-family: var(--fd);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.19;
+  letter-spacing: 0.231px;
+}
+
+/* body-strong: 17/600/1.24/−0.374px — SF Pro Text */
+.ty-bs {
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.374px;
+}
+
+/* body: 17/400/1.47/−0.374px — SF Pro Text */
+.ty-b {
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+}
+
+/* dense-link: 17/400/2.41/0 — SF Pro Text */
+.ty-dl {
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 2.41;
+  letter-spacing: 0;
+}
+
+/* caption: 14/400/1.43/−0.224px — SF Pro Text */
+.ty-cap {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+}
+
+/* caption-strong: 14/600/1.29/−0.224px — SF Pro Text */
+.ty-caps {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.29;
+  letter-spacing: -0.224px;
+}
+
+/* button-large: 18/300/1.0/0 — SF Pro Text */
+.ty-btnlg {
+  font-family: var(--ft);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: 0;
+}
+
+/* button-utility: 14/400/1.29/−0.224px — SF Pro Text */
+.ty-btnu {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.29;
+  letter-spacing: -0.224px;
+}
+
+/* fine-print: 12/400/1.0/−0.12px */
+.ty-fine {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.12px;
+}
+
+/* micro-legal: 10/400/1.3/−0.08px */
+.ty-mic {
+  font-family: var(--ft);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.08px;
+}
+
+/* nav-link: 12/400/1.0/−0.12px */
+.ty-nav {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.12px;
+}
+
+/* ─────────────────────────────────────────
+   COLOR UTILITIES
+───────────────────────────────────────── */
+.c-ink     { color: var(--ink); }
+.c-80      { color: var(--ink-muted-80); }
+.c-48      { color: var(--ink-muted-48); }
+.c-blue    { color: var(--primary); }
+.c-blue-dk { color: var(--primary-on-dark); }
+.c-white   { color: var(--on-dark); }
+.c-muted   { color: var(--body-muted); }
+.c-white65 { color: rgba(255,255,255,0.65); }
+.c-white40 { color: rgba(255,255,255,0.40); }
+.c-white25 { color: rgba(255,255,255,0.25); }
+
+/* ─────────────────────────────────────────
+   COMPONENTS
+───────────────────────────────────────── */
+
+/* global-nav */
+.global-nav {
+  background: var(--surface-black);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-xxl);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo {
+  color: var(--on-dark);
+  font-family: var(--fd);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.nav-links {
+  display: flex;
+  gap: var(--sp-xl);
+  color: rgba(255,255,255,0.8);
+}
+.nav-links span { font-family: var(--ft); font-size: 12px; letter-spacing: -0.12px; }
+
+/* sub-nav-frosted */
+.sub-nav {
+  background: rgba(245,245,247,0.82);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-xxl);
+  position: sticky;
+  top: 44px;
+  z-index: 99;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* button-primary */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.374px;
+  border-radius: var(--r-pill);
+  padding: 11px 22px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+.btn-primary:hover  { opacity: 0.85; }
+.btn-primary:active { transform: scale(0.95); }
+
+/* button-primary small */
+.btn-primary-sm {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.224px;
+  border-radius: var(--r-pill);
+  padding: 8px 18px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+.btn-primary-sm:hover  { opacity: 0.85; }
+.btn-primary-sm:active { transform: scale(0.95); }
+
+/* button-secondary-pill (ghost) */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: var(--primary-on-dark);
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.374px;
+  border-radius: var(--r-pill);
+  padding: 11px 22px;
+  border: 1px solid var(--primary-on-dark);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+.btn-ghost:hover  { opacity: 0.75; }
+.btn-ghost:active { transform: scale(0.95); }
+
+/* button-dark-utility */
+.btn-util {
+  display: inline-flex;
+  align-items: center;
+  background: var(--ink);
+  color: var(--on-dark);
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.29;
+  letter-spacing: -0.224px;
+  border-radius: var(--r-sm);
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease;
+}
+.btn-util:hover  { opacity: 0.8; }
+.btn-util:active { transform: scale(0.95); }
+
+/* store-utility-card */
+.utility-card {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+}
+
+/* configurator-option-chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
+  border-radius: var(--r-pill);
+  padding: 8px 16px;
+  border: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+
+/* configurator-option-chip-selected */
+.chip-sel {
+  border: 2px solid var(--primary-focus);
+}
+
+/* button-pearl-capsule */
+.chip-pearl {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-pearl);
+  color: var(--ink-muted-80);
+  font-family: var(--ft);
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  border-radius: var(--r-md);
+  padding: 8px 14px;
+  border: 3px solid var(--divider-soft);
+}
+
+/* norm tag (custom) */
+.norm-tag {
+  display: inline-block;
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.12px;
+  background: var(--canvas-parchment);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  color: var(--ink-muted-48);
+}
+
+/* text-link */
+.link     { color: var(--primary); text-decoration: none; }
+.link-dk  { color: var(--primary-on-dark); text-decoration: none; }
+
+/* ─────────────────────────────────────────
+   PRODUCT TILES — full-bleed, rounded: none
+───────────────────────────────────────── */
+.tile {
+  width: 100%;
+  padding: var(--sp-section) var(--sp-xxl);
+  border-radius: var(--r-none);
+}
+.tile-light     { background: var(--canvas); }
+.tile-parchment { background: var(--canvas-parchment); }
+.tile-dark      { background: var(--surface-tile-1); color: var(--on-dark); }
+.tile-dark2     { background: var(--surface-tile-2); color: var(--on-dark); }
+
+.tile-inner       { max-width: 980px;  margin: 0 auto; }
+.tile-inner-wide  { max-width: 1200px; margin: 0 auto; }
+
+/* ─────────────────────────────────────────
+   LAYOUT GRID
+───────────────────────────────────────── */
+.g2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-lg); }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); }
+.g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-lg); }
+.g-hero { display: grid; grid-template-columns: 1.6fr 1fr; gap: var(--sp-xxl); align-items: center; }
+
+/* ─────────────────────────────────────────
+   FLEX UTILS
+───────────────────────────────────────── */
+.fx   { display: flex; }
+.fxw  { flex-wrap: wrap; }
+.fxc  { flex-direction: column; }
+.aic  { align-items: center; }
+.jcb  { justify-content: space-between; }
+.g-xs { gap: var(--sp-xs); }
+.g-sm { gap: var(--sp-sm); }
+.g-md { gap: var(--sp-md); }
+.g-lg { gap: var(--sp-lg); }
+
+/* ─────────────────────────────────────────
+   SPACING SHORTCUTS
+───────────────────────────────────────── */
+.mt-xs  { margin-top: var(--sp-xs); }
+.mt-sm  { margin-top: var(--sp-sm); }
+.mt-md  { margin-top: var(--sp-md); }
+.mt-lg  { margin-top: var(--sp-lg); }
+.mt-xl  { margin-top: var(--sp-xl); }
+.mt-xxl { margin-top: var(--sp-xxl); }
+.mb-xs  { margin-bottom: var(--sp-xs); }
+.mb-sm  { margin-bottom: var(--sp-sm); }
+.mb-md  { margin-bottom: var(--sp-md); }
+.mb-lg  { margin-bottom: var(--sp-lg); }
+.mb-xl  { margin-bottom: var(--sp-xl); }
+
+/* ─────────────────────────────────────────
+   SECTION LABEL (custom divider row)
+───────────────────────────────────────── */
+.sec-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-xl);
+  color: var(--ink-muted-48);
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+.sec-num {
+  font-family: var(--ft);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: -0.08px;
+  color: var(--ink-muted-48);
+}
+.sec-title {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-48);
+}
+
+/* dark variant */
+.sec-label-d { color: rgba(255,255,255,0.3); }
+.sec-label-d::after { background: rgba(255,255,255,0.1); }
+
+/* ─────────────────────────────────────────
+   STATUS INDICATORS
+───────────────────────────────────────── */
+.si {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-family: var(--ft);
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.si-y { background: #d1fae5; color: #065f46; }
+.si-p { background: #fef9c3; color: #854d0e; }
+.si-n { background: #fee2e2; color: #991b1b; }
+.si-q { background: var(--divider-soft); color: var(--ink-muted-48); }
+
+/* ─────────────────────────────────────────
+   TABLE — Apple store utility style
+───────────────────────────────────────── */
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+.ap-table thead th {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.12px;
+  color: var(--ink-muted-48);
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--canvas);
+  white-space: nowrap;
+}
+.ap-table thead th:first-child { text-align: left; width: 260px; }
+.ap-table tbody td {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-80);
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--divider-soft);
+  text-align: center;
+  vertical-align: middle;
+  background: var(--canvas);
+}
+.ap-table tbody td:first-child {
+  text-align: left;
+  color: var(--ink);
+}
+.ap-table .cat-row td {
+  background: var(--canvas-parchment) !important;
+  font-family: var(--ft);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-muted-48);
+  padding: 8px 16px;
+}
+.city-vert {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.12px;
+  color: var(--ink);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: 14px 6px;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────
+   HEATMAP
+───────────────────────────────────────── */
+.hmap { display: grid; gap: 2px; }
+.hmap-row {
+  display: grid;
+  grid-template-columns: 260px repeat(6, 1fr);
+  gap: 2px;
+  align-items: stretch;
+}
+.hmap-label {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-80);
+  padding: 11px 16px;
+  background: var(--canvas);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+}
+.hmap-label-total {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.224px;
+  color: var(--ink);
+  padding: 11px 16px;
+  background: var(--canvas-parchment);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+}
+.hmap-head {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.12px;
+  color: var(--ink);
+  text-align: center;
+  padding: 10px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hmap-cell {
+  padding: 11px 8px;
+  border-radius: var(--r-sm);
+  text-align: center;
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.224px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+}
+.hmap-cell-total {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.374px;
+}
+/* heatmap colors */
+.hc4 { background: #d1fae5; color: #065f46; }
+.hc3 { background: #ecfdf5; color: #059669; }
+.hc2 { background: #fef9c3; color: #854d0e; }
+.hc1 { background: #fef2f2; color: #991b1b; }
+.hc0 { background: var(--divider-soft); color: var(--ink-muted-48); }
+
+/* ─────────────────────────────────────────
+   FLOW STEPS
+───────────────────────────────────────── */
+.flow-step {
+  display: flex;
+  gap: var(--sp-sm);
+  padding: 9px 0 9px 20px;
+  border-left: 1.5px solid rgba(255,255,255,0.1);
+  position: relative;
+  align-items: flex-start;
+}
+.flow-step::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  left: -5px;
+  top: 14px;
+  background: rgba(255,255,255,0.15);
+}
+.fs-ok::before   { background: #16a34a; }
+.fs-warn::before { background: #ca8a04; }
+.fs-no::before   { background: #dc2626; }
+.fs-nd::before   { background: rgba(255,255,255,0.2); }
+
+.flow-n {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.12px;
+  color: rgba(255,255,255,0.3);
+  flex-shrink: 0;
+  width: 96px;
+  padding-top: 1px;
+}
+.flow-d {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
+  line-height: 1.43;
+  flex: 1;
+}
+.fd-ok   { color: rgba(255,255,255,0.65); }
+.fd-warn { color: #fbbf24; }
+.fd-no   { color: #f87171; }
+.fd-nd   { color: rgba(255,255,255,0.3); }
+
+/* ─────────────────────────────────────────
+   DARK CARD (within dark tile)
+───────────────────────────────────────── */
+.dark-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-lg);
+  padding: var(--sp-xl);
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  background: var(--canvas-parchment);
+  padding: 64px var(--sp-xxl);
+  border-top: 1px solid var(--hairline);
+}
+.footer-inner    { max-width: 980px; margin: 0 auto; }
+.footer-col-head {
+  font-family: var(--ft);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.29;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted-80);
+  margin-bottom: var(--sp-sm);
+}
+.footer-link {
+  font-family: var(--ft);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 2.41;
+  letter-spacing: 0;
+  color: var(--primary);
+  display: block;
+  text-decoration: none;
+}
+.footer-legal {
+  font-family: var(--ft);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.12px;
+  color: var(--ink-muted-48);
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+/* ─────────────────────────────────────────
+   MISC
+───────────────────────────────────────── */
+.ovx { overflow-x: auto; }
+.scroll-note {
+  font-family: var(--ft);
+  font-size: 12px;
+  letter-spacing: -0.12px;
+  color: var(--ink-muted-48);
+  margin-bottom: var(--sp-xs);
+}
+.divider-h { height: 1px; background: var(--hairline); }
+.divider-h-dark { height: 1px; background: rgba(255,255,255,0.08); }
+
+/* rounded table wrapper */
+.table-wrap {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+}
+.hmap-wrap {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+}
+
+/* legend row */
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-lg); margin-bottom: var(--sp-lg); }
+.leg-item { display: flex; align-items: center; gap: var(--sp-xs); }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 833px) {
+  .g2, .g3, .g4, .g-hero { grid-template-columns: 1fr; }
+  .tile { padding: var(--sp-xxl) var(--sp-lg); }
+  .nav-links { display: none; }
+  .sub-nav, .global-nav { padding: 0 var(--sp-lg); }
+  .ty-hero { font-size: 34px; }
+  footer { padding: var(--sp-xxl) var(--sp-lg); }
+  .hmap-row { grid-template-columns: 130px repeat(6,1fr); }
+}
+@media (max-width: 639px) {
+  .ty-hero { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     global-nav
+═══════════════════════════════ -->
+<nav class="global-nav">
+  <span class="nav-logo" style="font-size:14px;font-weight:600;letter-spacing:-0.12px;">Sandboxes Municipais</span>
+  <div class="nav-links fx g-md">
+    <span>Regulação</span>
+    <span>Inovação</span>
+    <span>Governança</span>
+    <span>Municípios</span>
+  </div>
+  <a href="https://ikone.global" target="_blank" class="btn-util ty-btnu">Instituto IKONE</a>
+</nav>
+
+<!-- sub-nav-frosted -->
+<div class="sub-nav">
+  <span class="ty-tag c-ink">Sandboxes Regulatórios</span>
+  <div class="fx aic g-md">
+    <span class="ty-cap c-48">LC 182/2021 · Maio 2026</span>
+    <a href="#sec-01" class="btn-primary-sm">Ver análise</a>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     HERO — product-tile-dark
+═══════════════════════════════ -->
+<section class="tile tile-dark">
+  <div class="tile-inner">
+    <div class="g-hero">
+
+      <div>
+        <p class="ty-cap c-white40 mb-md">Análise comparativa · Regulação experimental municipal</p>
+
+        <h1 class="ty-hero c-white mb-lg">
+          Sandboxes<br>Municipais<br>no Brasil.
+        </h1>
+
+        <p class="ty-lead c-white65 mb-xl">
+          Governança, composição institucional e fluxo operacional dos cinco principais ambientes regulatórios experimentais brasileiros.
+        </p>
+
+        <div class="fx g-sm fxw">
+          <a href="#sec-01" class="btn-primary">Explorar análise</a>
+          <a href="#sec-02" class="btn-ghost">Ver matrizes</a>
+        </div>
+      </div>
+
+      <!-- stat cluster -->
+      <div style="display:flex;justify-content:flex-end;">
+        <div style="border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-lg);padding:var(--sp-xl);min-width:200px;">
+          <p class="ty-mic c-white40 mb-xs" style="text-transform:uppercase;letter-spacing:0.07em;">Municípios mapeados</p>
+          <p style="font-family:var(--fd);font-size:72px;font-weight:600;letter-spacing:-3px;line-height:1;color:var(--on-dark);">25</p>
+          <div class="divider-h-dark" style="margin:var(--sp-lg) 0;"></div>
+          <p class="ty-mic c-white40 mb-xs" style="text-transform:uppercase;letter-spacing:0.07em;">Analisados em profundidade</p>
+          <p style="font-family:var(--fd);font-size:48px;font-weight:600;letter-spacing:-2px;line-height:1;color:var(--on-dark);">6</p>
+          <div class="divider-h-dark" style="margin:var(--sp-lg) 0;"></div>
+          <p class="ty-mic c-white25 mb-xs" style="text-transform:uppercase;letter-spacing:0.07em;">Com lacuna de informação</p>
+          <p style="font-family:var(--fd);font-size:48px;font-weight:600;letter-spacing:-2px;line-height:1;color:rgba(255,255,255,0.22);">1</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     CONTEXTO — tile-parchment
+═══════════════════════════════ -->
+<section class="tile tile-parchment">
+  <div class="tile-inner">
+
+    <div class="sec-label">
+      <span class="sec-num">00</span>
+      <span class="sec-title">Contexto geral</span>
+    </div>
+
+    <div class="g4" style="gap:12px;">
+      <div class="utility-card">
+        <p class="ty-cap c-48 mb-sm">Única capital com lei municipal plena</p>
+        <p class="ty-tag c-ink mb-xs">Curitiba</p>
+        <p class="ty-cap c-48">Decreto 2021 → Lei 2024</p>
+      </div>
+      <div class="utility-card">
+        <p class="ty-cap c-48 mb-sm">Modelo mais replicado no país</p>
+        <p class="ty-tag c-ink mb-xs">Rio de Janeiro</p>
+        <p class="ty-cap c-48">Goiânia, Criciúma, Maceió</p>
+      </div>
+      <div class="utility-card">
+        <p class="ty-cap c-48 mb-sm">Maior comitê gestor formal</p>
+        <p class="ty-tag c-ink mb-xs">São Paulo</p>
+        <p class="ty-cap c-48">9 membros fixos institucionais</p>
+      </div>
+      <div class="utility-card">
+        <p class="ty-cap c-48 mb-sm">Sandbox mais recente</p>
+        <p class="ty-tag c-ink mb-xs">Vitória · 2025</p>
+        <p class="ty-cap c-48">Decreto nº 25.053 · abr/2025</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+<!-- PERFIS — tile-light -->
+<section id="sec-01" class="tile tile-light">
+  <div class="tile-inner">
+
+    <div class="sec-label">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Perfil de cada sandbox</span>
+    </div>
+
+    <div class="g3" style="gap:12px;">
+
+      <!-- 001 RIO -->
+      <div class="utility-card">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">001 · Rio de Janeiro · RJ</p>
+        <p class="ty-dmd c-ink mb-xs">Sandbox.Rio</p>
+        <span class="norm-tag mb-md">Decreto nº 50.697/2022</span>
+        <p class="ty-cap c-80 mt-md mb-md">
+          Primeira capital brasileira a regulamentar sandbox. Referência nacional — Goiânia, Criciúma e Maceió replicaram sua governança. Gerido pela DEIS/SUBRAN. Decisão concentrada na secretaria gestora, sem comitê externo formal. Prevê plano de descontinuidade obrigatório e autorização temporária de até 1 ano.
+        </p>
+        <div class="fx g-xs fxw">
+          <span class="chip">Decreto</span>
+          <span class="chip chip-sel">Por comunicado / edital</span>
+        </div>
+      </div>
+
+      <!-- 002 SP -->
+      <div class="utility-card">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">002 · São Paulo · SP</p>
+        <p class="ty-dmd c-ink mb-xs">SAMPA Sandbox</p>
+        <span class="norm-tag mb-md" style="font-size:11px;">Lei 17.879/2022 + Decreto 62.561/2023</span>
+        <p class="ty-cap c-80 mt-md mb-md">
+          Único com dupla base normativa. Comitê Gestor interinstitucional com 9 membros fixos: SMIT, SF, SGM, SMDET, SMUL, SIURB, ADESAMPA, SP Negócios e Câmara Municipal. Opera por ciclos temáticos definidos pelo Comitê. Projetos aceitos de startups e ICTs.
+        </p>
+        <div class="fx g-xs fxw">
+          <span class="chip chip-sel">Lei + Decreto</span>
+          <span class="chip">Ciclos temáticos</span>
+        </div>
+      </div>
+
+      <!-- 003 CWB -->
+      <div class="utility-card">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">003 · Curitiba · PR</p>
+        <p class="ty-dmd c-ink mb-xs">Sandbox Curitiba</p>
+        <span class="norm-tag mb-md" style="font-size:11px;">Decreto 1.885/2021 + Lei Municipal 2024</span>
+        <p class="ty-cap c-80 mt-md mb-md">
+          Única capital com lei municipal plena de sandbox (Lei 16.344/2024), que eleva o Programa Sandbox Curitiba — criado pelo Decreto 1.885/2021 — a política pública permanente. Toda a cidade como território de experimentação, sem área delimitada. Autorizações temporárias de até 2 anos com relaxamento de licenças. Inserido no Vale do Pinhão, hub de inovação coordenado pela Agência Curitiba. Governança formal de comitê não identificada em fonte pública — referência sólida de arquitetura normativa, mas não de fluxo operacional documentado.
+        </p>
+        <div class="fx g-xs fxw">
+          <span class="chip chip-sel">Lei + Decreto</span>
+          <span class="chip">Por edital · 2 anos</span>
+          <span class="chip">Cidade inteira</span>
+        </div>
+      </div>
+
+      <!-- 004 POA -->
+      <div class="utility-card">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">004 · Porto Alegre · RS</p>
+        <p class="ty-dmd c-ink mb-xs">Sandbox Porto Alegre</p>
+        <span class="norm-tag mb-md">Decreto nº 21.543/2022</span>
+        <p class="ty-cap c-80 mt-md mb-md">
+          Vinculado ao Gabinete de Inovação. Mecanismo de entrada diferenciado: "Comunicação de Interesse em Propostas de Testes em Ambientes Públicos". Empresa indica quais normas pretende afastar e designa representante acompanhador. Editais ainda não publicados na data de análise.
+        </p>
+        <div class="fx g-xs fxw">
+          <span class="chip">Decreto</span>
+          <span class="chip">Edital pendente</span>
+        </div>
+      </div>
+
+      <!-- 005 VIX -->
+      <div class="utility-card">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">005 · Vitória · ES</p>
+        <p class="ty-dmd c-ink mb-xs">Sandbox Vitória</p>
+        <span class="norm-tag mb-md">Decreto nº 25.053/2025</span>
+        <p class="ty-cap c-80 mt-md mb-md">
+          Único vinculado a laboratório urbano público — o LUV (SEGES). Governança em dois órgãos: Conselho Estratégico (diretrizes estratégicas e participação social) e Comitê Técnico (análise técnica de projetos). Articulação explícita com sociedade civil, startups, academia e órgãos públicos. Lançado abr/2025 com espaço físico inaugurado. Cinco eixos temáticos: soluções baseadas na natureza, resiliência climática, digital twins/IA/dados, jornada do cidadão e transformação urbana.
+        </p>
+        <div class="fx g-xs fxw">
+          <span class="chip">Decreto</span>
+          <span class="chip chip-sel">Via LUV</span>
+        </div>
+      </div>
+
+      <!-- 006 RECIFE -->
+      <div class="utility-card">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">006 · Recife · PE</p>
+        <p class="ty-dmd c-ink mb-xs">Eita!Labs</p>
+        <span class="norm-tag mb-md">Decreto Municipal nº 35.511/2022</span>
+        <p class="ty-cap c-80 mt-md mb-md">
+          Living lab urbano com poderes de sandbox regulatório em território delimitado — Porto Digital, Bairro do Recife e entorno. Regulamentado pelo Decreto nº 35.511/2022 (atualizado pelo Decreto nº 38.788/2025). Governança em dois órgãos: Conselho Gestor (deliberativo, com poder de suspender normas infralegais) e CCRLL — Comitê Coordenador (executivo, lança editais, monitora e emite laudos). Operado pela Emprel. Ciclos de 6 a 12 meses com uma prorrogação possível. Dois ambientes: Sandbox Físico (testes urbanos em campo) e Conecta Labs (sandbox digital). Múltiplos editais publicados desde 2022.
+        </p>
+        <div class="fx g-xs fxw">
+          <span class="chip chip-sel">Decreto · 2022/2025</span>
+          <span class="chip">Por edital / ciclos</span>
+          <span class="chip">Living Lab + Sandbox</span>
+        </div>
+      </div>
+
+      <!-- LACUNAS -->
+      <div style="background:var(--canvas-parchment);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:var(--sp-lg);">
+        <p class="ty-mic c-48 mb-sm" style="text-transform:uppercase;letter-spacing:0.07em;">Lacuna remanescente</p>
+        <p class="ty-bs c-ink mb-md">Salvador</p>
+        <p class="ty-cap c-80 mb-md">Nenhum decreto ou lei específica sobre sandbox regulatório identificado em fonte pública consultada até maio/2026.</p>
+        <div class="divider-h mb-md"></div>
+        <p class="ty-cap c-80 mb-xs"><span class="ty-caps c-80">Salvador —</span> SEMIT ativa com agenda de cidade inteligente, mas sem ato normativo de sandbox localizado.</p>
+        <div class="divider-h mb-md" style="margin-top:var(--sp-md);"></div>
+        <p class="ty-mic c-48 mb-xs" style="text-transform:uppercase;letter-spacing:0.07em;">Base normativa confirmada — fluxo não documentado</p>
+        <p class="ty-cap c-80"><span class="ty-caps c-80">Belo Horizonte —</span> Marco Municipal das Startups (PL 1012/2024) aprovado em 2025 com sandbox como inovação central. Fluxo operacional e governança detalhada ainda sem documentação pública suficiente para análise completa.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     MATRIZ — tile-parchment
+═══════════════════════════════ -->
+<section id="sec-02" class="tile tile-parchment">
+  <div class="tile-inner-wide">
+
+    <div class="sec-label">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Matriz de governança</span>
+    </div>
+
+    <!-- legend -->
+    <div class="legend">
+      <div class="leg-item"><span class="si si-y">✓</span><span class="ty-cap c-48">Confirmado em fonte pública</span></div>
+      <div class="leg-item"><span class="si si-p">~</span><span class="ty-cap c-48">Parcial ou inferido</span></div>
+      <div class="leg-item"><span class="si si-n">✗</span><span class="ty-cap c-48">Ausente</span></div>
+      <div class="leg-item"><span class="si si-q">?</span><span class="ty-cap c-48">Não identificado em fonte pública</span></div>
+    </div>
+
+    <p class="scroll-note">← Role horizontalmente para ver todas as colunas →</p>
+    <div class="ovx table-wrap">
+      <table class="ap-table">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th><div class="city-vert">Rio de Janeiro</div></th>
+            <th><div class="city-vert">São Paulo</div></th>
+            <th><div class="city-vert">Curitiba</div></th>
+            <th><div class="city-vert">Porto Alegre</div></th>
+            <th><div class="city-vert">Vitória</div></th>
+            <th><div class="city-vert">Recife</div></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="cat-row"><td colspan="7">Institucionalização</td></tr>
+          <tr>
+            <td>Base normativa</td>
+            <td><span class="chip" style="font-size:11px;">Decreto</span></td>
+            <td><span class="chip chip-sel" style="font-size:11px;">Lei + Decreto</span></td>
+            <td><span class="chip chip-sel" style="font-size:11px;">Lei Municipal</span></td>
+            <td><span class="chip" style="font-size:11px;">Decreto</span></td>
+            <td><span class="chip" style="font-size:11px;">Decreto</span></td>
+            <td><span class="chip" style="font-size:11px;">Decreto</span></td>
+          </tr>
+          <tr>
+            <td>Ano de criação</td>
+            <td>2022</td><td>2022 / 2023</td><td>2021 / 2024</td><td>2022</td><td>2025</td><td>2022</td>
+          </tr>
+
+          <tr class="cat-row"><td colspan="7">Estrutura de governança</td></tr>
+          <tr><td>Órgão coordenador definido</td>          <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Comitê ou conselho formal</td>            <td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Composição multiinstitucional</td>        <td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Participação de secretarias setoriais</td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Participação jurídica / PGM explícita</td><td><span class="si si-n">✗</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Participação de controle interno</td>     <td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td></tr>
+          <tr><td>Participação de ICTs / universidades</td> <td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-q">?</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Participação da sociedade civil</td>      <td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td></tr>
+          <tr><td>Participação do legislativo</td>          <td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td></tr>
+
+          <tr class="cat-row"><td colspan="7">Fluxo operacional</td></tr>
+          <tr><td>Processo de seleção / edital</td>        <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Critérios de elegibilidade explícitos</td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Análise técnica da proposta</td>          <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Instrumento formal de autorização</td>    <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-q">?</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Plano de teste obrigatório</td>           <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-q">?</span></td><td><span class="si si-q">?</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Monitoramento durante o teste</td>        <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Relatório final obrigatório</td>          <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-q">?</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Previsão de encerramento</td>             <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-q">?</span></td><td><span class="si si-q">?</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Previsão de prorrogação / escala</td>     <td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-q">?</span></td><td><span class="si si-q">?</span></td><td><span class="si si-y">✓</span></td></tr>
+          <tr><td>Plano de descontinuidade</td>             <td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-q">?</span></td><td><span class="si si-q">?</span></td><td><span class="si si-n">✗</span></td></tr>
+
+          <tr class="cat-row"><td colspan="7">Transparência</td></tr>
+          <tr><td>Critérios públicos de seleção</td>        <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Divulgação de resultados prevista</td>    <td><span class="si si-y">✓</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td><td><span class="si si-q">?</span></td><td><span class="si si-p">~</span></td></tr>
+          <tr><td>Edital efetivamente publicado</td>        <td><span class="si si-y">✓</span></td><td><span class="si si-p">~</span></td><td><span class="si si-p">~</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-n">✗</span></td><td><span class="si si-y">✓</span></td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     HEATMAP — tile-light
+═══════════════════════════════ -->
+<section class="tile tile-light">
+  <div class="tile-inner">
+
+    <div class="sec-label">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Grau de formalização por dimensão</span>
+    </div>
+
+    <p class="ty-cap c-48 mb-lg">
+      Escala 0–4.&emsp;4 = totalmente formalizado em fonte pública.&emsp;0 = não identificado.
+    </p>
+
+    <div class="hmap-wrap">
+      <div class="hmap">
+        <!-- header -->
+        <div class="hmap-row" style="background:var(--canvas-parchment);padding:8px 0;">
+          <div></div>
+          <div class="hmap-head">Rio</div>
+          <div class="hmap-head">São Paulo</div>
+          <div class="hmap-head">Curitiba</div>
+          <div class="hmap-head">Porto Alegre</div>
+          <div class="hmap-head">Vitória</div>
+          <div class="hmap-head">Recife</div>
+        </div>
+        <!-- rows -->
+        <div class="hmap-row"><div class="hmap-label">Estrutura de governança</div>    <div class="hmap-cell hc3">3</div><div class="hmap-cell hc4">4</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc2">2</div><div class="hmap-cell hc3">3</div><div class="hmap-cell hc3">3</div></div>
+        <div class="hmap-row"><div class="hmap-label">Composição institucional</div>   <div class="hmap-cell hc2">2</div><div class="hmap-cell hc4">4</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc4">4</div><div class="hmap-cell hc3">3</div></div>
+        <div class="hmap-row"><div class="hmap-label">Fluxo de seleção</div>           <div class="hmap-cell hc4">4</div><div class="hmap-cell hc4">4</div><div class="hmap-cell hc2">2</div><div class="hmap-cell hc3">3</div><div class="hmap-cell hc3">3</div><div class="hmap-cell hc3">3</div></div>
+        <div class="hmap-row"><div class="hmap-label">Monitoramento</div>              <div class="hmap-cell hc4">4</div><div class="hmap-cell hc3">3</div><div class="hmap-cell hc0">0</div><div class="hmap-cell hc2">2</div><div class="hmap-cell hc3">3</div><div class="hmap-cell hc3">3</div></div>
+        <div class="hmap-row"><div class="hmap-label">Encerramento e pós-teste</div>  <div class="hmap-cell hc4">4</div><div class="hmap-cell hc4">4</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc2">2</div></div>
+        <div class="hmap-row"><div class="hmap-label">Transparência pública</div>     <div class="hmap-cell hc4">4</div><div class="hmap-cell hc3">3</div><div class="hmap-cell hc1">1</div><div class="hmap-cell hc2">2</div><div class="hmap-cell hc2">2</div><div class="hmap-cell hc2">2</div></div>
+        <!-- total -->
+        <div class="hmap-row">
+          <div class="hmap-label-total">
+            Score total &nbsp;<span class="ty-cap c-48">/24</span>
+          </div>
+          <div class="hmap-cell hc4 hmap-cell-total">21</div>
+          <div class="hmap-cell hc4 hmap-cell-total">22</div>
+          <div class="hmap-cell hc1 hmap-cell-total">6</div>
+          <div class="hmap-cell hc2 hmap-cell-total">11</div>
+          <div class="hmap-cell hc3 hmap-cell-total">16</div>
+          <div class="hmap-cell hc3 hmap-cell-total">16</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="ty-cap c-48 mt-lg">
+      Scores refletem documentação pública disponível — não desempenho operacional dos programas. Curitiba: 6 — boa arquitetura normativa (Lei 16.344/2024), mas sem comitê formal, editais, monitoramento ou resultados documentados publicamente. Vitória: 16 (Comitê Técnico + LUV confirmados). Recife: 16 (Conselho Gestor, CCRLL, editais e monitoramento confirmados via Decreto 35.511/2022).
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     FLUXOS — tile-dark
+═══════════════════════════════ -->
+<section class="tile tile-dark">
+  <div class="tile-inner-wide">
+
+    <div class="sec-label sec-label-d">
+      <span class="sec-num">04</span>
+      <span class="sec-title" style="color:rgba(255,255,255,0.5);">Fluxo operacional comparado</span>
+    </div>
+
+    <div class="g2" style="gap:12px;">
+
+      <!-- RIO -->
+      <div class="dark-card">
+        <div class="fx aic g-md mb-lg">
+          <p class="ty-tag c-white">Sandbox.Rio</p>
+          <span class="chip-pearl" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;">Rio de Janeiro</span>
+        </div>
+        <div class="flow-step fs-ok">  <span class="flow-n">01 Abertura</span>      <span class="flow-d fd-ok">Comunicado público na página da DEIS/SUBRAN com cronograma, critérios e conteúdo exigido das propostas</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">02 Submissão</span>     <span class="flow-d fd-ok">Proposta formal com descrição, métricas, dispensas pretendidas, análise de risco e plano de descontinuidade</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">03 Análise técnica</span><span class="flow-d fd-ok">DEIS/SUBRAN analisa elegibilidade; pode solicitar parceiros externos — universidades, pesquisadores</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">04 Deliberação</span>   <span class="flow-d fd-ok">Relatório final de elegibilidade pela DEIS/SUBRAN; aprovação pelo Secretário da SMDEIS</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">05 Autorização</span>   <span class="flow-d fd-ok">Autorização temporária (até 1 ano) com dispensas, condições, limites e salvaguardas por participante</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">06 Monitoramento</span> <span class="flow-d fd-ok">Reuniões periódicas; comunicação obrigatória de riscos; acesso a documentos e registros</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">07 Encerramento</span>  <span class="flow-d fd-ok">Por decurso de prazo, pedido do participante ou cassação; ativa plano de descontinuidade</span></div>
+        <div class="flow-step fs-no">  <span class="flow-n">08 Pós-teste</span>     <span class="flow-d fd-no">Sem rito explícito de escala, contratação ou revisão regulatória no decreto</span></div>
+      </div>
+
+      <!-- SP -->
+      <div class="dark-card">
+        <div class="fx aic g-md mb-lg">
+          <p class="ty-tag c-white">SAMPA Sandbox</p>
+          <span class="chip-pearl" style="background:rgba(0,102,204,0.2);border-color:rgba(41,151,255,0.25);color:#2997ff;font-size:12px;">São Paulo</span>
+        </div>
+        <div class="flow-step fs-ok">  <span class="flow-n">01 Ciclo temático</span><span class="flow-d fd-ok">Comitê Gestor define temas prioritários e áreas; publica edital de chamada para o ciclo</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">02 Submissão</span>     <span class="flow-d fd-ok">Pessoa jurídica ou ICT; aceita também diretamente via secretaria setorial impactada</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">03 Avaliação</span>     <span class="flow-d fd-ok">Comitê avalia capital intelectual, impacto nos serviços municipais e governança pública</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">04 Afastamento</span>  <span class="flow-d fd-ok">Comitê solicita ao órgão competente afastamento temporário da norma; órgão responde com fundamentação</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">05 Autorização</span>  <span class="flow-d fd-ok">Ciclo de 6 a 12 meses; renovável pelo Comitê mediante fundamentação expressa</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">06 Monitoramento</span><span class="flow-d fd-ok">Comitê acompanha continuamente; aprova Relatório de Desempenho ao final do ciclo</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">07 Relatório final</span><span class="flow-d fd-ok">Comitê emite Relatório de Acompanhamento com sugestões de ajuste na legislação municipal</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">08 Pós-teste</span>    <span class="flow-d fd-ok">Resultados registrados para políticas públicas; Comitê interage com órgãos para absorção dos resultados</span></div>
+      </div>
+
+      <!-- POA -->
+      <div class="dark-card">
+        <div class="fx aic g-md mb-lg">
+          <p class="ty-tag c-white">Sandbox Porto Alegre</p>
+          <span class="chip-pearl" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;">Porto Alegre</span>
+        </div>
+        <div class="flow-step fs-ok">  <span class="flow-n">01 Abertura</span>      <span class="flow-d fd-ok">"Comunicação de Interesse em Propostas de Testes em Ambientes Públicos" lançada pela administração</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">02 Submissão</span>     <span class="flow-d fd-ok">Empresa indica quais normas pretende afastar e designa representante acompanhador</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">03 Avaliação</span>     <span class="flow-d fd-ok">Avaliação da fundamentação e documentação enviada pela empresa</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">04 Autorização</span>   <span class="flow-d fd-ok">Concessão de autorização provisória</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">05 Monitoramento</span> <span class="flow-d fd-warn">Previsto, sem detalhamento operacional explícito no decreto</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">06 Encerramento</span>  <span class="flow-d fd-ok">Emissão de parecer fundamentado pelos responsáveis pelo acompanhamento</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">07 Divulgação</span>    <span class="flow-d fd-ok">Responsáveis pelo acompanhamento divulgam os resultados obtidos</span></div>
+        <div class="flow-step fs-no">  <span class="flow-n">08 Pós-teste</span>     <span class="flow-d fd-no">Sem rito de escala, contratação ou revisão regulatória definido</span></div>
+      </div>
+
+      <!-- CWB -->
+      <div class="dark-card">
+        <div class="fx aic g-md mb-lg">
+          <p class="ty-tag c-white">Sandbox Curitiba</p>
+          <span class="chip-pearl" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;">Curitiba · PR</span>
+        </div>
+        <div class="flow-step fs-ok"><span class="flow-n">01 Abertura</span>      <span class="flow-d fd-ok">Decreto 1.885/2021 prevê que editais selecionarão projetos em áreas a serem definidas — toda a cidade como território de experimentação</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">02 Submissão</span>    <span class="flow-d fd-warn">Inscrição de startups e empresas inovadoras via edital; edital concreto não localizado em repositório público</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">03 Elegibilidade</span><span class="flow-d fd-warn">Lei 16.344/2024 define mínimos: negócio inovador, capacidade técnica e ficha limpa dos sócios; critérios detalhados em edital — não localizado</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">04 Análise técnica</span><span class="flow-d fd-warn">Inferida; provavelmente conduzida pela Agência Curitiba ou secretaria responsável — instância formal não identificada em fonte pública</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">05 Autorização</span>  <span class="flow-d fd-warn">Autorização temporária de até 2 anos com relaxamento de licenças — prevista em lei; modelo de instrumento não localizado publicamente</span></div>
+        <div class="flow-step fs-no"><span class="flow-n">06 Monitoramento</span>  <span class="flow-d fd-no">Não identificado em fonte pública; ritos de acompanhamento, periodicidade e indicadores não documentados</span></div>
+        <div class="flow-step fs-ok"><span class="flow-n">07 Encerramento</span>   <span class="flow-d fd-ok">Prazo fixo de 2 anos define encerramento; sem previsão de prorrogação — confirmado pela Lei 16.344/2024</span></div>
+        <div class="flow-step fs-no"><span class="flow-n">08 Pós-teste</span>      <span class="flow-d fd-no">Sem rito documentado de decisão pós-teste, escala ou ajuste normativo em fonte pública consultada</span></div>
+      </div>
+
+      <!-- VIX -->
+      <div class="dark-card">
+        <div class="fx aic g-md mb-lg">
+          <p class="ty-tag c-white">Sandbox Vitória</p>
+          <span class="chip-pearl" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;">Vitória · ES</span>
+        </div>
+        <div class="flow-step fs-ok">  <span class="flow-n">01 Comunicado</span>    <span class="flow-d fd-ok">Comunicado nas páginas oficiais da PMV com cronograma e critérios de elegibilidade</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">02 Submissão</span>     <span class="flow-d fd-ok">Proposta submetida com requisitos similares ao modelo carioca</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">03 Conselho Estratégico</span><span class="flow-d fd-ok">Define diretrizes estratégicas por ciclo e participação da sociedade civil, startups e academia</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">04 Comitê Técnico</span><span class="flow-d fd-ok">Realiza análise técnica dos projetos — instância distinta do Conselho, com foco operacional</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">05 Autorização</span>   <span class="flow-d fd-warn">LUV oferece infraestrutura operacional para seleção; instrumento formal ainda não detalhado publicamente</span></div>
+        <div class="flow-step fs-ok">  <span class="flow-n">06 Monitoramento</span> <span class="flow-d fd-ok">LUV responsável pelo monitoramento e avaliação dos projetos durante o ciclo</span></div>
+        <div class="flow-step fs-nd">  <span class="flow-n">07 Encerramento</span>  <span class="flow-d fd-nd">Sem rito definido em fonte pública consultada</span></div>
+        <div class="flow-step fs-nd">  <span class="flow-n">08 Pós-teste</span>     <span class="flow-d fd-nd">Programa ainda em estruturação — decreto publicado em abril/2025</span></div>
+      </div>
+
+      <!-- RECIFE -->
+      <div class="dark-card">
+        <div class="fx aic g-md mb-lg">
+          <p class="ty-tag c-white">Eita!Labs</p>
+          <span class="chip-pearl" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;">Recife · PE</span>
+        </div>
+        <div class="flow-step fs-ok"><span class="flow-n">01 Abertura</span>      <span class="flow-d fd-ok">CCRLL e Emprel lançam edital de chamamento público em ciclos — editais publicados em 2022, 2024 e 2025</span></div>
+        <div class="flow-step fs-ok"><span class="flow-n">02 Submissão</span>     <span class="flow-d fd-ok">Inscrição via formulário online no portal eitalabs.recife.pe.gov.br com dados da empresa e pitch da solução</span></div>
+        <div class="flow-step fs-ok"><span class="flow-n">03 Análise técnica</span><span class="flow-d fd-ok">CCRLL realiza avaliação técnica de elegibilidade; reuniões com pré-selecionadas antes da deliberação pelo Conselho Gestor</span></div>
+        <div class="flow-step fs-ok"><span class="flow-n">04 Deliberação</span>   <span class="flow-d fd-ok">Conselho Gestor delibera e autoriza assinatura de contratos de implantação; pode suspender normas infralegais por até 12 meses</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">05 Autorização</span>  <span class="flow-d fd-warn">Contratos de implantação celebrados pela Emprel; autorização temporária prevista no Decreto 35.511 — modelo não público</span></div>
+        <div class="flow-step fs-ok"><span class="flow-n">06 Monitoramento</span> <span class="flow-d fd-ok">CCRLL monitora iniciativas; sandbox físico exige relatórios mensais e dashboards; Equipe Técnica EITA Labs acompanha</span></div>
+        <div class="flow-step fs-ok"><span class="flow-n">07 Encerramento</span>  <span class="flow-d fd-ok">Por decurso de prazo, pedido do participante ou cancelamento pelo Conselho; rito com direito de defesa (Decreto arts. 10–11); renovação possível uma vez</span></div>
+        <div class="flow-step fs-warn"><span class="flow-n">08 Pós-teste</span>    <span class="flow-d fd-warn">Decreto prevê relatório de resultados para subsidiar ajustes normativos — decisões concretas pós-teste não estão sistematizadas publicamente</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     FOOTER
+═══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="g4" style="gap:var(--sp-xxl);">
+      <div>
+        <p class="footer-col-head">Elaboração</p>
+        <p class="ty-cap c-80">Júlio Diógenes<br>Diretor de Produtos · IKONE<br>Maio 2026</p>
+      </div>
+      <div>
+        <p class="footer-col-head">Metodologia</p>
+        <p class="ty-cap c-80">Pesquisa documental em fontes<br>públicas verificáveis. Fato,<br>inferência e lacuna separados.</p>
+      </div>
+      <div>
+        <p class="footer-col-head">Base legal</p>
+        <a href="https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp182.htm" target="_blank" class="footer-link">LC 182/2021</a>
+        <p class="ty-cap c-80">Marco Legal das Startups e<br>do Empreendedorismo Inovador</p>
+      </div>
+      <div>
+        <p class="footer-col-head">Repositório base</p>
+        <a href="https://dnascimentooficial.github.io/sandboxes-municipais-brasil/" target="_blank" class="footer-link">Sandboxes Municipais Brasil</a>
+        <a href="https://www.enap.gov.br" target="_blank" class="footer-link">ENAP</a>
+      </div>
+    </div>
+
+    <p class="footer-legal">
+      Copyright © 2026 Júlio Diógenes · Instituto IKONE. Todos os direitos reservados.&emsp;|&emsp;
+      Fontes consultadas:
+      <a href="https://www.legisweb.com.br/legislacao/?id=426279" target="_blank" class="link">Decreto Rio nº 50.141/2022</a> ·
+      <a href="https://doweb.rio.rj.gov.br/apifront/portal/edicoes/imprimir_materia/825386/5322" target="_blank" class="link">Decreto Rio nº 50.697/2022</a> ·
+      <a href="https://legislacao.prefeitura.sp.gov.br/leis/lei-17879-de-30-de-dezembro-de-2022" target="_blank" class="link">Lei SP nº 17.879/2022</a> ·
+      <a href="https://www.sinesp.org.br/legislacao/saiu-no-doc-legislacao/17116-decreto-n-62-561-de-12-07-2023" target="_blank" class="link">Decreto SP nº 62.561/2023</a> ·
+      Decreto Curitiba nº 1.885/2021 ·
+      <a href="https://prefeitura.poa.br/carta-de-servicos/sandbox-regulatorio" target="_blank" class="link">Decreto POA nº 21.543/2022</a> ·
+      <a href="https://www.vitoria.es.gov.br/noticia/decreto-regulamenta-o-sandbox-vitoria-53242" target="_blank" class="link">Decreto Vitória nº 25.053/2025</a> · <a href="https://www.legisweb.com.br/legislacao/?id=429903" target="_blank" class="link">Decreto Recife nº 35.511/2022</a> · <a href="https://www.emprel.gov.br/sites/default/files/edital_chamamento_003.2024_eita_labs_2_revisado.pdf" target="_blank" class="link">Edital EITA!Labs 003/2024</a> · <a href="https://eitalabs.recife.pe.gov.br" target="_blank" class="link">eitalabs.recife.pe.gov.br</a> · <a href="https://www.curitiba.pr.leg.br/informacao/noticias/lei-do-sandbox-regulatorio-de-curitiba-ja-esta-em-vigor" target="_blank" class="link">Lei Curitiba 16.344/2024</a> · <a href="https://www.curitiba.pr.gov.br/noticias/curitiba-adota-ambiente-livre-de-regulacoes-para-validacao-de-tecnologias/61782" target="_blank" class="link">Decreto Curitiba 1.885/2021</a>.
+      Scores refletem documentação pública disponível — não o desempenho operacional dos programas.
+    </p>
+
+  </div>
+</footer>
+
+</body>
+</html>
